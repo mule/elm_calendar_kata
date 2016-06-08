@@ -32,10 +32,15 @@ module.exports = {
             mainModules: ['calendar.elm'],
 
             // Defaults to 'js/' folder in paths.public (optional)
-            outputFolder: 'js/vendor/',
+            outputFolder: '../js/vendor/',
 
             // optional: add some parameters that are passed to elm-make
             makeParameters: ['--warn']
+        },
+        babel: {
+             ignore: [/js\/vendor/]
+
+
         }
     },
     npm: {

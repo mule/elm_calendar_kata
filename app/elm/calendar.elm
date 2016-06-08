@@ -5,49 +5,61 @@ import Html.Attributes exposing (class)
 import List exposing (concat)
 import Html.App as Html
 import Html.Events exposing (..)
+import Debug
+import Task
 
 
-main : Html.Html a
+main : Program { weekdays : List String }
 main =
-    Html.program
+    Html.programWithFlags
     { init = init
     , view = view
     , update = update
     , subscriptions = subscriptions
     }
-
+type alias Flags = { weekdays : (List String)}
 type alias Model =
-    { weekdays: List String }
+    { weekdays: (List String)
+    }
 
-init : (Model, Cmd Msg)
+init : Flags -> (Model, Cmd Msg)
 
-init =
-    (Model [], Cmd.none)
+init flags =
+    Debug.log "init running"
+    (Model flags.weekdays, Cmd.none )
 
 type Msg
     = GetWeekdays
-    | Weekdays
+    | Weekdays (List String)
 
-port weekdaysRequest : Cmd msg
+port weekdaysRequest : String -> Cmd msg
 
-update: Msg -> Model -> (Model, Cmd Msg)
+--send : String -> Cmd Msg
+--send msg =
+  --Task.perform weekdaysRequest weekdaysRequest (Task.succeed msg)
+
+update : Msg -> Model -> (Model, Cmd Msg)
 
 update action model =
     case action of
-        getWeekdays ->
-            (model, weekdaysRequest)
-        weekdays -> (model, dateOperations)
+        GetWeekdays ->
+            (model, weekdaysRequest "")
+        Weekdays response ->
+            Debug.log (toString response)
+            (Model response, Cmd.none)
 
 port weekdaysResponse : (List String -> msg) -> Sub msg
 
 subscriptions : Model -> Sub Msg
-subsricptions model =
-    weekdaysResponse
 
-view : List String -> Html.Html a
+subscriptions model =
+    weekdaysResponse Weekdays
+
+view : Model -> Html.Html Msg
 
 view model =
-    div [class "row"] (div [class "col s2"] [] ::  weekday_columns model ++ [div [class "col s3"] []])
+    Debug.log (toString model)
+    div [class "row"] (div [class "col s2"] [] ::  weekday_columns model.weekdays ++ [div [class "col s3"] []])
 
 weekday_columns : List String -> List (Html.Html a)
 

@@ -12,8 +12,10 @@
     "build": "brunch build --production"
   },
   "dependencies": {
+    "babel-brunch": "^6.0.4",
     "elm-brunch": "^0.5.0",
-    "materialize-css": "^0.97.6"
+    "materialize-css": "^0.97.6",
+    "moment": "^2.13.0"
   },
   "devDependencies": {
     "javascript-brunch": "^2.0.0",
