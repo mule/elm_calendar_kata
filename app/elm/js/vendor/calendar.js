@@ -7080,17 +7080,59 @@ var _elm_lang$html$Html_Attributes$classList = function (list) {
 };
 var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
 
-var _user$project$Main$main = {
-	main: A2(
+var _user$project$Main$weekday_columns = function (weekdays) {
+	return A2(
+		_elm_lang$core$List$map,
+		function (n) {
+			return A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('col s1')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(n)
+					]));
+		},
+		weekdays);
+};
+var _user$project$Main$view = function (model) {
+	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
 			[
-				_elm_lang$html$Html_Attributes$class('container')
+				_elm_lang$html$Html_Attributes$class('row')
 			]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html$text('Hello from elm calendar')
-			]))
+		A2(
+			_elm_lang$core$List_ops['::'],
+			A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('col s2')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[])),
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_user$project$Main$weekday_columns(model),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('col s3')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[]))
+					]))));
+};
+var _user$project$Main$model = _elm_lang$core$Native_List.fromArray(
+	['Ma', 'Ti', 'Ke', 'To', 'Pe', 'La', 'Su']);
+var _user$project$Main$main = {
+	main: _user$project$Main$view(_user$project$Main$model)
 };
 
 var Elm = {};

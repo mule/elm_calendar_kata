@@ -25,7 +25,7 @@ repl-temp-*
  Thumbs.db
 #
 # # NPM packages folder.
- node_modules/
+node_modules/
 #
 # # Brunch folder for temporary files.
  tmp/
