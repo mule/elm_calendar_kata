@@ -14,14 +14,17 @@ module.exports = {
 
     paths: {
         watched: [
-            "elm/app.elm"
+            "app/",
+            "app/assets",
+            "app/js",
+            "app/elm/calendar.elm"
         ]
     },
     plugins: {
         elmBrunch: {
             // Set to path where elm-package.json is located, defaults to project root (optional)
             // if your elm files are not in /app then make sure to configure paths.watched in main brunch config
-            elmFolder: './elm',
+            elmFolder: 'app/elm',
 
             // Set to the elm file(s) containing your "main" function
             // `elm make` handles all elm dependencies (required)

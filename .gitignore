@@ -4,35 +4,35 @@ elm-stuff/
 # elm-repl generated files
 repl-temp-*
 # Numerous always-ignore extensions
-# *.diff
-# *.err
-# *.orig
-# *.log
-# *.rej
-# *.swo
-# *.swp
-# *.vi
-# *~
-# *.sass-cache
+ *.diff
+ *.err
+ *.orig
+ *.log
+ *.rej
+ *.swo
+ *.swp
+ *.vi
+ *~
+ *.sass-cache
 #
 # # OS or Editor folders
-# .DS_Store
-# .cache
-# .project
-# .settings
-# .tmproj
-# nbproject
-# Thumbs.db
+ .DS_Store
+ .cache
+  .project
+ .settings
+ .tmproj
+ nbproject
+ Thumbs.db
 #
 # # NPM packages folder.
-# node_modules/
+ node_modules/
 #
 # # Brunch folder for temporary files.
-# tmp/
+ tmp/
 #
 # # Brunch output folder.
-# public/
+ public/
 #
 # # Bower stuff.
-# bower_components/
+ bower_components/
 #
