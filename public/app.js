@@ -15711,7 +15711,7 @@ var _user$project$Calendar$week_columns = A2(
 			_elm_lang$html$Html$div,
 			_elm_lang$core$Native_List.fromArray(
 				[
-					_elm_lang$html$Html_Attributes$class('col s1')
+					_elm_lang$html$Html_Attributes$class('col s1 day card-panel teal')
 				]),
 			_elm_lang$core$Native_List.fromArray(
 				[
@@ -15737,42 +15737,52 @@ var _user$project$Calendar$weekday_columns = function (weekdays) {
 		},
 		weekdays);
 };
-var _user$project$Calendar$row = function (content) {
-	return A2(
-		_elm_lang$html$Html$div,
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html_Attributes$class('row')
-			]),
-		A2(
-			_elm_lang$core$List_ops['::'],
-			A2(
-				_elm_lang$html$Html$div,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$class('col s2')
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[])),
+var _user$project$Calendar$row = F2(
+	function (attributes, content) {
+		return A2(
+			_elm_lang$html$Html$div,
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				content,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						A2(
-						_elm_lang$html$Html$div,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$class('col s3')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[]))
-					]))));
-};
+						_elm_lang$html$Html_Attributes$class('row')
+					]),
+				attributes),
+			A2(
+				_elm_lang$core$List_ops['::'],
+				A2(
+					_elm_lang$html$Html$div,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('col s2')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[])),
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					content,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A2(
+							_elm_lang$html$Html$div,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$class('col s3')
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[]))
+						]))));
+	});
 var _user$project$Calendar$week_rows = A2(
 	_elm_lang$core$List$map,
 	function (day) {
-		return _user$project$Calendar$row(_user$project$Calendar$week_columns);
+		return A2(
+			_user$project$Calendar$row,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('week')
+				]),
+			_user$project$Calendar$week_columns);
 	},
 	_elm_lang$core$Native_List.range(1, 5));
 var _user$project$Calendar$view = function (model) {
@@ -15786,7 +15796,10 @@ var _user$project$Calendar$view = function (model) {
 			]),
 		A2(
 			_elm_lang$core$List_ops['::'],
-			_user$project$Calendar$row(
+			A2(
+				_user$project$Calendar$row,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
 				_user$project$Calendar$weekday_columns(model.weekdays)),
 			_user$project$Calendar$week_rows));
 };

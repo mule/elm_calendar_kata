@@ -17,6 +17,7 @@ module.exports = {
             "app/",
             "app/assets",
             "app/js",
+            "app/scss",
             "app/elm/calendar.elm"
         ]
     },
@@ -39,8 +40,9 @@ module.exports = {
         },
         babel: {
              ignore: [/js\/vendor/]
-
-
+        },
+        sass:{
+            mode: 'native'
         }
     },
     npm: {

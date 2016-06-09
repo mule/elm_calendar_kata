@@ -8177,5 +8177,13 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   }
 }
 
+/* line 2, C:/omatProjut/elm_calendar_kata/app/scss/main.scss */
+.day {
+  margin-bottom: 0px; }
+
+/* line 6, C:/omatProjut/elm_calendar_kata/app/scss/main.scss */
+.week {
+  margin-bottom: 0px; }
+
 
 /*# sourceMappingURL=app.css.map*/
