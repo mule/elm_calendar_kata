@@ -61,7 +61,17 @@ view model =
     Debug.log (toString model)
     div [class "row"] (div [class "col s2"] [] ::  weekday_columns model.weekdays ++ [div [class "col s3"] []])
 
+
+row :(List Html.Html) -> Html.Html Msg
+
+row content =
+    div [class "row"] (div [class "col s2"] [] :: content ++ [div [class "col s3"] []])
+
 weekday_columns : List String -> List (Html.Html a)
 
 weekday_columns weekdays =
     List.map  (\n -> div [class "col s1"] [text n]) weekdays
+
+week_columns =
+    let days = [1..7]
+    day_columns = [(div [class "col s1"] [text day]) | day <- days ]
