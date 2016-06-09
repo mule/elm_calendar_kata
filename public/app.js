@@ -117,7 +117,6 @@
 
 (function() {
 var global = window;
-var process;
 var __makeRelativeRequire = function(require, mappings, pref) {
   var none = {};
   var tryReq = function(name, pref) {
@@ -8581,9 +8580,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 });
 
-require.alias("moment/moment.js", "moment");
-require.alias("brunch/node_modules/process/browser.js", "brunch/node_modules/process");
-require.alias("brunch/node_modules/process/browser.js", "process");process = require('process');require.register("___globals___", function(exports, require, module) {
+require.alias("moment/moment.js", "moment");require.register("___globals___", function(exports, require, module) {
   
 });})();require('___globals___');
 
@@ -12151,239 +12148,6 @@ var _elm_lang$core$Result$fromMaybe = F2(
 		}
 	});
 
-var _elm_lang$core$Task$onError = _elm_lang$core$Native_Scheduler.onError;
-var _elm_lang$core$Task$andThen = _elm_lang$core$Native_Scheduler.andThen;
-var _elm_lang$core$Task$spawnCmd = F2(
-	function (router, _p0) {
-		var _p1 = _p0;
-		return _elm_lang$core$Native_Scheduler.spawn(
-			A2(
-				_elm_lang$core$Task$andThen,
-				_p1._0,
-				_elm_lang$core$Platform$sendToApp(router)));
-	});
-var _elm_lang$core$Task$fail = _elm_lang$core$Native_Scheduler.fail;
-var _elm_lang$core$Task$mapError = F2(
-	function (f, task) {
-		return A2(
-			_elm_lang$core$Task$onError,
-			task,
-			function (err) {
-				return _elm_lang$core$Task$fail(
-					f(err));
-			});
-	});
-var _elm_lang$core$Task$succeed = _elm_lang$core$Native_Scheduler.succeed;
-var _elm_lang$core$Task$map = F2(
-	function (func, taskA) {
-		return A2(
-			_elm_lang$core$Task$andThen,
-			taskA,
-			function (a) {
-				return _elm_lang$core$Task$succeed(
-					func(a));
-			});
-	});
-var _elm_lang$core$Task$map2 = F3(
-	function (func, taskA, taskB) {
-		return A2(
-			_elm_lang$core$Task$andThen,
-			taskA,
-			function (a) {
-				return A2(
-					_elm_lang$core$Task$andThen,
-					taskB,
-					function (b) {
-						return _elm_lang$core$Task$succeed(
-							A2(func, a, b));
-					});
-			});
-	});
-var _elm_lang$core$Task$map3 = F4(
-	function (func, taskA, taskB, taskC) {
-		return A2(
-			_elm_lang$core$Task$andThen,
-			taskA,
-			function (a) {
-				return A2(
-					_elm_lang$core$Task$andThen,
-					taskB,
-					function (b) {
-						return A2(
-							_elm_lang$core$Task$andThen,
-							taskC,
-							function (c) {
-								return _elm_lang$core$Task$succeed(
-									A3(func, a, b, c));
-							});
-					});
-			});
-	});
-var _elm_lang$core$Task$map4 = F5(
-	function (func, taskA, taskB, taskC, taskD) {
-		return A2(
-			_elm_lang$core$Task$andThen,
-			taskA,
-			function (a) {
-				return A2(
-					_elm_lang$core$Task$andThen,
-					taskB,
-					function (b) {
-						return A2(
-							_elm_lang$core$Task$andThen,
-							taskC,
-							function (c) {
-								return A2(
-									_elm_lang$core$Task$andThen,
-									taskD,
-									function (d) {
-										return _elm_lang$core$Task$succeed(
-											A4(func, a, b, c, d));
-									});
-							});
-					});
-			});
-	});
-var _elm_lang$core$Task$map5 = F6(
-	function (func, taskA, taskB, taskC, taskD, taskE) {
-		return A2(
-			_elm_lang$core$Task$andThen,
-			taskA,
-			function (a) {
-				return A2(
-					_elm_lang$core$Task$andThen,
-					taskB,
-					function (b) {
-						return A2(
-							_elm_lang$core$Task$andThen,
-							taskC,
-							function (c) {
-								return A2(
-									_elm_lang$core$Task$andThen,
-									taskD,
-									function (d) {
-										return A2(
-											_elm_lang$core$Task$andThen,
-											taskE,
-											function (e) {
-												return _elm_lang$core$Task$succeed(
-													A5(func, a, b, c, d, e));
-											});
-									});
-							});
-					});
-			});
-	});
-var _elm_lang$core$Task$andMap = F2(
-	function (taskFunc, taskValue) {
-		return A2(
-			_elm_lang$core$Task$andThen,
-			taskFunc,
-			function (func) {
-				return A2(
-					_elm_lang$core$Task$andThen,
-					taskValue,
-					function (value) {
-						return _elm_lang$core$Task$succeed(
-							func(value));
-					});
-			});
-	});
-var _elm_lang$core$Task$sequence = function (tasks) {
-	var _p2 = tasks;
-	if (_p2.ctor === '[]') {
-		return _elm_lang$core$Task$succeed(
-			_elm_lang$core$Native_List.fromArray(
-				[]));
-	} else {
-		return A3(
-			_elm_lang$core$Task$map2,
-			F2(
-				function (x, y) {
-					return A2(_elm_lang$core$List_ops['::'], x, y);
-				}),
-			_p2._0,
-			_elm_lang$core$Task$sequence(_p2._1));
-	}
-};
-var _elm_lang$core$Task$onEffects = F3(
-	function (router, commands, state) {
-		return A2(
-			_elm_lang$core$Task$map,
-			function (_p3) {
-				return {ctor: '_Tuple0'};
-			},
-			_elm_lang$core$Task$sequence(
-				A2(
-					_elm_lang$core$List$map,
-					_elm_lang$core$Task$spawnCmd(router),
-					commands)));
-	});
-var _elm_lang$core$Task$toMaybe = function (task) {
-	return A2(
-		_elm_lang$core$Task$onError,
-		A2(_elm_lang$core$Task$map, _elm_lang$core$Maybe$Just, task),
-		function (_p4) {
-			return _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
-		});
-};
-var _elm_lang$core$Task$fromMaybe = F2(
-	function ($default, maybe) {
-		var _p5 = maybe;
-		if (_p5.ctor === 'Just') {
-			return _elm_lang$core$Task$succeed(_p5._0);
-		} else {
-			return _elm_lang$core$Task$fail($default);
-		}
-	});
-var _elm_lang$core$Task$toResult = function (task) {
-	return A2(
-		_elm_lang$core$Task$onError,
-		A2(_elm_lang$core$Task$map, _elm_lang$core$Result$Ok, task),
-		function (msg) {
-			return _elm_lang$core$Task$succeed(
-				_elm_lang$core$Result$Err(msg));
-		});
-};
-var _elm_lang$core$Task$fromResult = function (result) {
-	var _p6 = result;
-	if (_p6.ctor === 'Ok') {
-		return _elm_lang$core$Task$succeed(_p6._0);
-	} else {
-		return _elm_lang$core$Task$fail(_p6._0);
-	}
-};
-var _elm_lang$core$Task$init = _elm_lang$core$Task$succeed(
-	{ctor: '_Tuple0'});
-var _elm_lang$core$Task$onSelfMsg = F3(
-	function (_p9, _p8, _p7) {
-		return _elm_lang$core$Task$succeed(
-			{ctor: '_Tuple0'});
-	});
-var _elm_lang$core$Task$command = _elm_lang$core$Native_Platform.leaf('Task');
-var _elm_lang$core$Task$T = function (a) {
-	return {ctor: 'T', _0: a};
-};
-var _elm_lang$core$Task$perform = F3(
-	function (onFail, onSuccess, task) {
-		return _elm_lang$core$Task$command(
-			_elm_lang$core$Task$T(
-				A2(
-					_elm_lang$core$Task$onError,
-					A2(_elm_lang$core$Task$map, onSuccess, task),
-					function (x) {
-						return _elm_lang$core$Task$succeed(
-							onFail(x));
-					})));
-	});
-var _elm_lang$core$Task$cmdMap = F2(
-	function (tagger, _p10) {
-		var _p11 = _p10;
-		return _elm_lang$core$Task$T(
-			A2(_elm_lang$core$Task$map, tagger, _p11._0));
-	});
-_elm_lang$core$Native_Platform.effectManagers['Task'] = {pkg: 'elm-lang/core', init: _elm_lang$core$Task$init, onEffects: _elm_lang$core$Task$onEffects, onSelfMsg: _elm_lang$core$Task$onSelfMsg, tag: 'cmd', cmdMap: _elm_lang$core$Task$cmdMap};
-
 //import Native.Utils //
 
 var _elm_lang$core$Native_Debug = function() {
@@ -15940,107 +15704,22 @@ var _elm_lang$html$Html_Attributes$classList = function (list) {
 };
 var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
 
-var _elm_lang$html$Html_Events$keyCode = A2(_elm_lang$core$Json_Decode_ops[':='], 'keyCode', _elm_lang$core$Json_Decode$int);
-var _elm_lang$html$Html_Events$targetChecked = A2(
-	_elm_lang$core$Json_Decode$at,
-	_elm_lang$core$Native_List.fromArray(
-		['target', 'checked']),
-	_elm_lang$core$Json_Decode$bool);
-var _elm_lang$html$Html_Events$targetValue = A2(
-	_elm_lang$core$Json_Decode$at,
-	_elm_lang$core$Native_List.fromArray(
-		['target', 'value']),
-	_elm_lang$core$Json_Decode$string);
-var _elm_lang$html$Html_Events$defaultOptions = _elm_lang$virtual_dom$VirtualDom$defaultOptions;
-var _elm_lang$html$Html_Events$onWithOptions = _elm_lang$virtual_dom$VirtualDom$onWithOptions;
-var _elm_lang$html$Html_Events$on = _elm_lang$virtual_dom$VirtualDom$on;
-var _elm_lang$html$Html_Events$onFocus = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'focus',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onBlur = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'blur',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onSubmitOptions = _elm_lang$core$Native_Utils.update(
-	_elm_lang$html$Html_Events$defaultOptions,
-	{preventDefault: true});
-var _elm_lang$html$Html_Events$onSubmit = function (msg) {
-	return A3(
-		_elm_lang$html$Html_Events$onWithOptions,
-		'submit',
-		_elm_lang$html$Html_Events$onSubmitOptions,
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onCheck = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'change',
-		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetChecked));
-};
-var _elm_lang$html$Html_Events$onInput = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'input',
-		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetValue));
-};
-var _elm_lang$html$Html_Events$onMouseOut = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'mouseout',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onMouseOver = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'mouseover',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onMouseLeave = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'mouseleave',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onMouseEnter = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'mouseenter',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onMouseUp = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'mouseup',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onMouseDown = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'mousedown',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onDoubleClick = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'dblclick',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onClick = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'click',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$Options = F2(
-	function (a, b) {
-		return {stopPropagation: a, preventDefault: b};
-	});
-
+var _user$project$Calendar$week_columns = A2(
+	_elm_lang$core$List$map,
+	function (day) {
+		return A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('col s1')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(
+					_elm_lang$core$Basics$toString(day))
+				]));
+	},
+	_elm_lang$core$Native_List.range(1, 7));
 var _user$project$Calendar$weekday_columns = function (weekdays) {
 	return A2(
 		_elm_lang$core$List$map,
@@ -16058,10 +15737,8 @@ var _user$project$Calendar$weekday_columns = function (weekdays) {
 		},
 		weekdays);
 };
-var _user$project$Calendar$view = function (model) {
-	return A4(
-		_elm_lang$core$Debug$log,
-		_elm_lang$core$Basics$toString(model),
+var _user$project$Calendar$row = function (content) {
+	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
 			[
@@ -16079,7 +15756,7 @@ var _user$project$Calendar$view = function (model) {
 					[])),
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				_user$project$Calendar$weekday_columns(model.weekdays),
+				content,
 				_elm_lang$core$Native_List.fromArray(
 					[
 						A2(
@@ -16091,6 +15768,27 @@ var _user$project$Calendar$view = function (model) {
 						_elm_lang$core$Native_List.fromArray(
 							[]))
 					]))));
+};
+var _user$project$Calendar$week_rows = A2(
+	_elm_lang$core$List$map,
+	function (day) {
+		return _user$project$Calendar$row(_user$project$Calendar$week_columns);
+	},
+	_elm_lang$core$Native_List.range(1, 5));
+var _user$project$Calendar$view = function (model) {
+	return A4(
+		_elm_lang$core$Debug$log,
+		_elm_lang$core$Basics$toString(model),
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('month')
+			]),
+		A2(
+			_elm_lang$core$List_ops['::'],
+			_user$project$Calendar$row(
+				_user$project$Calendar$weekday_columns(model.weekdays)),
+			_user$project$Calendar$week_rows));
 };
 var _user$project$Calendar$weekdaysRequest = _elm_lang$core$Native_Platform.outgoingPort(
 	'weekdaysRequest',

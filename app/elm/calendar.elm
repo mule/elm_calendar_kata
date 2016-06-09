@@ -4,9 +4,9 @@ import Html exposing ( text, div)
 import Html.Attributes exposing (class)
 import List exposing (concat)
 import Html.App as Html
-import Html.Events exposing (..)
+-- import Html.Events exposing (..)
 import Debug
-import Task
+--import Task
 
 
 main : Program { weekdays : List String }
@@ -59,10 +59,10 @@ view : Model -> Html.Html Msg
 
 view model =
     Debug.log (toString model)
-    div [class "row"] (div [class "col s2"] [] ::  weekday_columns model.weekdays ++ [div [class "col s3"] []])
+    div [class "month"] (row (weekday_columns model.weekdays) :: week_rows)
 
 
-row :(List Html.Html) -> Html.Html Msg
+row :List (Html.Html Msg) -> Html.Html Msg
 
 row content =
     div [class "row"] (div [class "col s2"] [] :: content ++ [div [class "col s3"] []])
@@ -72,6 +72,11 @@ weekday_columns : List String -> List (Html.Html a)
 weekday_columns weekdays =
     List.map  (\n -> div [class "col s1"] [text n]) weekdays
 
+week_columns : List (Html.Html a)
+
 week_columns =
-    let days = [1..7]
-    day_columns = [(div [class "col s1"] [text day]) | day <- days ]
+     List.map (\day -> div [class "col s1"] [text (toString day)]) [1..7]
+
+week_rows :  List (Html.Html Msg)
+week_rows =
+    List.map (\day -> row week_columns) [1..5]
