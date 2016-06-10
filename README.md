@@ -2,7 +2,7 @@
 
 A simple calendar app I am making to practice Elm.
 
-* Intentionally used momentjs to practice use of ports and whatnot.
+* Intentionally used momentjs instead of Elm native Date package to practice use of ports and whatnot.
 * Materialize-css and sass used for layout
 * Brunch as a build tool
 
