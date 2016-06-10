@@ -1,7 +1,7 @@
 port module Calendar exposing (..)
 
 import Html exposing ( text, div, Attribute)
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (class, classList)
 import List exposing (concat)
 import Html.App as Html
 -- import Html.Events exposing (..)
@@ -59,20 +59,19 @@ view : Model -> Html.Html Msg
 
 view model =
     Debug.log (toString model)
-    div [class "month"] (row [] (weekday_columns model.weekdays) :: week_rows)
+    div [class "month"] (row [("weekdayRow", True)] (weekday_columns model.weekdays) :: week_rows)
 
 
-row : List (Attribute Msg) -> List (Html.Html Msg) -> Html.Html Msg
+row : List (String, Bool) -> List (Html.Html Msg) -> Html.Html Msg
 
 
-row attributes content  =
-    div ( [ class "row"] ++ attributes) (div [class "col s2"] [] :: content ++ [div [class "col s3"] []])
-
+row classes content  =
+    div ( [ classList ([ ("row", True) ] ++ classes) ]) (div [class "col s2"] [] :: content ++ [div [class "col s3"] []])
 
 weekday_columns : List String -> List (Html.Html a)
 
 weekday_columns weekdays =
-    List.map  (\n -> div [class "col s1"] [text n]) weekdays
+    List.map  (\n -> div [class "col s1 weekday"] [text n]) weekdays
 
 week_columns : List (Html.Html a)
 
@@ -81,4 +80,4 @@ week_columns =
 
 week_rows :  List (Html.Html Msg)
 week_rows =
-    List.map (\day -> row [class "week"] week_columns) [1..5]
+    List.map (\day -> row [("week", True)] week_columns) [1..5]

@@ -1,8 +1,17 @@
 
+.weekdayRow { margin-bottom: 0px;}
+.weekday {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    margin-bottom: 0px;
+    min-width: 50px;
+}
 .day {
-    margin-bottom: 0px
+    margin: 0.5em;
+    min-width: 50px;
+    min-height: 50px;
 }
 
 .week{
-    margin-bottom: 0px
+    margin-bottom: 0px;
 }

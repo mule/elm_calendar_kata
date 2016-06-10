@@ -117,6 +117,7 @@
 
 (function() {
 var global = window;
+var process;
 var __makeRelativeRequire = function(require, mappings, pref) {
   var none = {};
   var tryReq = function(name, pref) {
@@ -8580,7 +8581,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 });
 
-require.alias("moment/moment.js", "moment");require.register("___globals___", function(exports, require, module) {
+require.alias("moment/moment.js", "moment");
+require.alias("brunch/node_modules/process/browser.js", "brunch/node_modules/process");
+require.alias("brunch/node_modules/process/browser.js", "process");process = require('process');require.register("___globals___", function(exports, require, module) {
   
 });})();require('___globals___');
 
@@ -15728,7 +15731,7 @@ var _user$project$Calendar$weekday_columns = function (weekdays) {
 				_elm_lang$html$Html$div,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html_Attributes$class('col s1')
+						_elm_lang$html$Html_Attributes$class('col s1 weekday')
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
@@ -15738,16 +15741,20 @@ var _user$project$Calendar$weekday_columns = function (weekdays) {
 		weekdays);
 };
 var _user$project$Calendar$row = F2(
-	function (attributes, content) {
+	function (classes, content) {
 		return A2(
 			_elm_lang$html$Html$div,
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$class('row')
-					]),
-				attributes),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$classList(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Native_List.fromArray(
+							[
+								{ctor: '_Tuple2', _0: 'row', _1: true}
+							]),
+						classes))
+				]),
 			A2(
 				_elm_lang$core$List_ops['::'],
 				A2(
@@ -15780,7 +15787,7 @@ var _user$project$Calendar$week_rows = A2(
 			_user$project$Calendar$row,
 			_elm_lang$core$Native_List.fromArray(
 				[
-					_elm_lang$html$Html_Attributes$class('week')
+					{ctor: '_Tuple2', _0: 'week', _1: true}
 				]),
 			_user$project$Calendar$week_columns);
 	},
@@ -15799,7 +15806,9 @@ var _user$project$Calendar$view = function (model) {
 			A2(
 				_user$project$Calendar$row,
 				_elm_lang$core$Native_List.fromArray(
-					[]),
+					[
+						{ctor: '_Tuple2', _0: 'weekdayRow', _1: true}
+					]),
 				_user$project$Calendar$weekday_columns(model.weekdays)),
 			_user$project$Calendar$week_rows));
 };
