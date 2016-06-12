@@ -14,15 +14,25 @@
   "dependencies": {
     "babel-brunch": "^6.0.4",
     "elm-brunch": "^0.5.0",
+    "jasmine": "^2.4.1",
+    "lodash": "^4.13.1",
     "materialize-css": "^0.97.6",
     "moment": "^2.13.0",
     "sass-brunch": "^2.6.3"
   },
   "devDependencies": {
-    "javascript-brunch": "^2.0.0",
-    "css-brunch": "^2.0.0",
-    "uglify-js-brunch": "^2.0.0",
+    "auto-reload-brunch": "^2.0.0",
+    "babel-core": "^6.9.1",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
     "clean-css-brunch": "^2.0.0",
-    "auto-reload-brunch": "^2.0.0"
+    "css-brunch": "^2.0.0",
+    "javascript-brunch": "^2.0.0",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-jasmine": "^1.0.2",
+    "karma-webpack": "^1.7.0",
+    "uglify-js-brunch": "^2.0.0",
+    "webpack": "^1.13.1"
   }
 }

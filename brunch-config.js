@@ -21,6 +21,11 @@ module.exports = {
             "app/elm/calendar.elm"
         ]
     },
+    conventions: {
+        ignored: [
+            /.spec.js/,
+        ],
+    },
     plugins: {
         elmBrunch: {
             // Set to path where elm-package.json is located, defaults to project root (optional)
@@ -39,9 +44,9 @@ module.exports = {
             makeParameters: ['--warn']
         },
         babel: {
-             ignore: [/js\/vendor/]
+            ignore: [/js\/vendor/]
         },
-        sass:{
+        sass: {
             mode: 'native'
         }
     },

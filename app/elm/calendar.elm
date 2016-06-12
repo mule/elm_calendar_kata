@@ -9,7 +9,7 @@ import Debug
 --import Task
 
 
-main : Program { weekdays : List String }
+main : Program Model
 main =
     Html.programWithFlags
     { init = init
@@ -17,22 +17,37 @@ main =
     , update = update
     , subscriptions = subscriptions
     }
-type alias Flags = { weekdays : (List String)}
-type alias Model =
-    { weekdays: (List String)
+--type alias Flags =
+--    { weekdays : (List String)
+--    , monthWeeks
+--}
+type alias Day =
+    { weekDay : Int
+    , date : Int
+    , month : Int
     }
 
-init : Flags -> (Model, Cmd Msg)
+type alias Week =
+    { weekOfYear : Int
+    , dates : List Day
+    }
+
+type alias Model =
+    { weekdays : List String
+    , monthWeeks : List Week
+    }
+
+init : Model -> (Model, Cmd a )
 
 init flags =
     Debug.log "init running"
-    (Model flags.weekdays, Cmd.none )
+    (flags, Cmd.none )
 
 type Msg
-    = GetWeekdays
-    | Weekdays (List String)
+    = GetMonth
+    | Month Model
 
-port weekdaysRequest : String -> Cmd msg
+port monthRequest : Int -> Cmd msg
 
 --send : String -> Cmd Msg
 --send msg =
@@ -42,24 +57,23 @@ update : Msg -> Model -> (Model, Cmd Msg)
 
 update action model =
     case action of
-        GetWeekdays ->
-            (model, weekdaysRequest "")
-        Weekdays response ->
-            Debug.log (toString response)
-            (Model response, Cmd.none)
+        GetMonth ->
+            (model, monthRequest 1)
+        Month response ->
+            (response, Cmd.none)
 
-port weekdaysResponse : (List String -> msg) -> Sub msg
+port monthResponse : (Model -> msg) -> Sub msg
 
 subscriptions : Model -> Sub Msg
 
 subscriptions model =
-    weekdaysResponse Weekdays
+    monthResponse Month
 
 view : Model -> Html.Html Msg
 
 view model =
     Debug.log (toString model)
-    div [class "month"] (row [("weekdayRow", True)] (weekday_columns model.weekdays) :: week_rows)
+    div [class "month"] (row [("weekdayRow", True)] (weekday_columns model.weekdays) :: week_rows model.monthWeeks)
 
 
 row : List (String, Bool) -> List (Html.Html Msg) -> Html.Html Msg
@@ -73,11 +87,15 @@ weekday_columns : List String -> List (Html.Html a)
 weekday_columns weekdays =
     List.map  (\n -> div [class "col s1 weekday"] [text n]) weekdays
 
-week_columns : List (Html.Html a)
+week_columns : Week -> List (Html.Html a)
 
-week_columns =
-     List.map (\day -> div [class "col s1 day card-panel teal"] [text (toString day)]) [1..7]
+week_columns week =
+     List.map (\day -> day_column day) week.dates
 
-week_rows :  List (Html.Html Msg)
-week_rows =
-    List.map (\day -> row [("week", True)] week_columns) [1..5]
+week_rows : List Week ->  List (Html.Html Msg)
+week_rows weeks =
+    List.map (\week -> row [("week", True)] (week_columns week)) weeks
+
+day_column : Day -> Html.Html a
+day_column day =
+     div [class "col s1 day card-panel teal"] [text (toString day.date)]
