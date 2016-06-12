@@ -11,7 +11,8 @@ A simple calendar app I am making to practice Elm.
 * Install (if you don't have them):
     * [Node.js](http://nodejs.org): `brew install node` on OS X
     * [Brunch](http://brunch.io): `npm install -g brunch`
-    * [Elm](http://elm-lang.org): npm install -g elm
+    * [Elm](http://elm-lang.org): `npm install -g elm`
+    * [Karma] (https://karma-runner.github.io): `npm install -g karma`
     * Brunch plugins and app dependencies: `npm install`
 * Run:
     * `brunch watch --server` — watches the project with continuous rebuild. This will also launch HTTP server with [pushState](https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Manipulating_the_browser_history).
