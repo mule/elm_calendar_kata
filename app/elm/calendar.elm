@@ -1,9 +1,11 @@
 port module Calendar exposing (..)
 
-import Html exposing ( text, div, Attribute)
+import Html exposing ( text, div, h4, Attribute)
 import Html.Attributes exposing (class, classList)
 import List exposing (concat, map2)
 import Html.App as Html
+import String exposing (join)
+import Array exposing (Array)
 -- import Html.Events exposing (..)
 import Debug
 --import Task
@@ -32,13 +34,12 @@ type alias Week =
     , dates : List Day
     }
 
-type alias Month =
-    { monthOfYer : Int}
+
 
 type alias Model =
     { weekdays : List String
-    , months : List String,
-    , selectedMonth : String
+    , months : List String
+    , selectedMonth : Int
     , selectedYear : Int
     , monthWeeks : List Week
     }
@@ -80,8 +81,12 @@ subscriptions model =
 view : Model -> Html.Html Msg
 
 view model =
-    Debug.log (toString model)
-    div [class "month"] (row [("weekdayRow", True)] (weekday_columns model.weekdays) :: week_rows model.monthWeeks)
+    --Debug.log (toString model)
+    let
+        monthName =
+            Maybe.withDefault "Unknown" <| Array.get model.selectedMonth (Array.fromList model.months)
+    in
+            div [class "month"] ((month_row monthName model.selectedYear) :: row [("weekdayRow", True)] (weekday_columns model.weekdays) :: week_rows model.monthWeeks)
 
 
 row : List (String, Bool) -> List (Html.Html Msg) -> Html.Html Msg
@@ -122,4 +127,7 @@ day_column : Day -> Html.Html a
 day_column day =
      div [class "col s1 day card-panel teal"] [text (toString day.date)]
 
- month_row :
+month_row : String -> Int -> Html.Html Msg
+
+month_row month year =
+    row [] [ div [ class "col s7 offset-s2"] [ (h4 [class "center-align"]  [text <| join " " [month, (toString year)]]) ]]

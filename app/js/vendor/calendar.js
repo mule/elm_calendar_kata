@@ -7247,10 +7247,52 @@ var _user$project$Calendar$row = F2(
 								[]))
 						]))));
 	});
+var _user$project$Calendar$month_row = F2(
+	function (month, year) {
+		return A2(
+			_user$project$Calendar$row,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$div,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('col s7 offset-s2')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A2(
+							_elm_lang$html$Html$h4,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$class('center-align')
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html$text(
+									A2(
+										_elm_lang$core$String$join,
+										' ',
+										_elm_lang$core$Native_List.fromArray(
+											[
+												month,
+												_elm_lang$core$Basics$toString(year)
+											])))
+								]))
+						]))
+				]));
+	});
 var _user$project$Calendar$view = function (model) {
-	return A4(
-		_elm_lang$core$Debug$log,
-		_elm_lang$core$Basics$toString(model),
+	var monthName = A2(
+		_elm_lang$core$Maybe$withDefault,
+		'Unknown',
+		A2(
+			_elm_lang$core$Array$get,
+			model.selectedMonth,
+			_elm_lang$core$Array$fromList(model.months)));
+	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
 			[
@@ -7258,14 +7300,17 @@ var _user$project$Calendar$view = function (model) {
 			]),
 		A2(
 			_elm_lang$core$List_ops['::'],
+			A2(_user$project$Calendar$month_row, monthName, model.selectedYear),
 			A2(
-				_user$project$Calendar$row,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						{ctor: '_Tuple2', _0: 'weekdayRow', _1: true}
-					]),
-				_user$project$Calendar$weekday_columns(model.weekdays)),
-			_user$project$Calendar$week_rows(model.monthWeeks)));
+				_elm_lang$core$List_ops['::'],
+				A2(
+					_user$project$Calendar$row,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							{ctor: '_Tuple2', _0: 'weekdayRow', _1: true}
+						]),
+					_user$project$Calendar$weekday_columns(model.weekdays)),
+				_user$project$Calendar$week_rows(model.monthWeeks))));
 };
 var _user$project$Calendar$init = function (flags) {
 	return A2(
@@ -7304,43 +7349,61 @@ var _user$project$Calendar$monthResponse = _elm_lang$core$Native_Platform.incomi
 				_elm_lang$core$Json_Decode$andThen,
 				A2(
 					_elm_lang$core$Json_Decode_ops[':='],
-					'monthWeeks',
-					_elm_lang$core$Json_Decode$list(
-						A2(
-							_elm_lang$core$Json_Decode$andThen,
-							A2(_elm_lang$core$Json_Decode_ops[':='], 'weekOfYear', _elm_lang$core$Json_Decode$int),
-							function (weekOfYear) {
-								return A2(
-									_elm_lang$core$Json_Decode$andThen,
-									A2(
-										_elm_lang$core$Json_Decode_ops[':='],
-										'dates',
-										_elm_lang$core$Json_Decode$list(
-											A2(
-												_elm_lang$core$Json_Decode$andThen,
-												A2(_elm_lang$core$Json_Decode_ops[':='], 'weekDay', _elm_lang$core$Json_Decode$int),
-												function (weekDay) {
-													return A2(
-														_elm_lang$core$Json_Decode$andThen,
-														A2(_elm_lang$core$Json_Decode_ops[':='], 'date', _elm_lang$core$Json_Decode$int),
-														function (date) {
-															return A2(
-																_elm_lang$core$Json_Decode$andThen,
-																A2(_elm_lang$core$Json_Decode_ops[':='], 'month', _elm_lang$core$Json_Decode$int),
-																function (month) {
-																	return _elm_lang$core$Json_Decode$succeed(
-																		{weekDay: weekDay, date: date, month: month});
-																});
-														});
-												}))),
-									function (dates) {
-										return _elm_lang$core$Json_Decode$succeed(
-											{weekOfYear: weekOfYear, dates: dates});
-									});
-							}))),
-				function (monthWeeks) {
-					return _elm_lang$core$Json_Decode$succeed(
-						{weekdays: weekdays, monthWeeks: monthWeeks});
+					'months',
+					_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string)),
+				function (months) {
+					return A2(
+						_elm_lang$core$Json_Decode$andThen,
+						A2(_elm_lang$core$Json_Decode_ops[':='], 'selectedMonth', _elm_lang$core$Json_Decode$int),
+						function (selectedMonth) {
+							return A2(
+								_elm_lang$core$Json_Decode$andThen,
+								A2(_elm_lang$core$Json_Decode_ops[':='], 'selectedYear', _elm_lang$core$Json_Decode$int),
+								function (selectedYear) {
+									return A2(
+										_elm_lang$core$Json_Decode$andThen,
+										A2(
+											_elm_lang$core$Json_Decode_ops[':='],
+											'monthWeeks',
+											_elm_lang$core$Json_Decode$list(
+												A2(
+													_elm_lang$core$Json_Decode$andThen,
+													A2(_elm_lang$core$Json_Decode_ops[':='], 'weekOfYear', _elm_lang$core$Json_Decode$int),
+													function (weekOfYear) {
+														return A2(
+															_elm_lang$core$Json_Decode$andThen,
+															A2(
+																_elm_lang$core$Json_Decode_ops[':='],
+																'dates',
+																_elm_lang$core$Json_Decode$list(
+																	A2(
+																		_elm_lang$core$Json_Decode$andThen,
+																		A2(_elm_lang$core$Json_Decode_ops[':='], 'weekDay', _elm_lang$core$Json_Decode$int),
+																		function (weekDay) {
+																			return A2(
+																				_elm_lang$core$Json_Decode$andThen,
+																				A2(_elm_lang$core$Json_Decode_ops[':='], 'date', _elm_lang$core$Json_Decode$int),
+																				function (date) {
+																					return A2(
+																						_elm_lang$core$Json_Decode$andThen,
+																						A2(_elm_lang$core$Json_Decode_ops[':='], 'month', _elm_lang$core$Json_Decode$int),
+																						function (month) {
+																							return _elm_lang$core$Json_Decode$succeed(
+																								{weekDay: weekDay, date: date, month: month});
+																						});
+																				});
+																		}))),
+															function (dates) {
+																return _elm_lang$core$Json_Decode$succeed(
+																	{weekOfYear: weekOfYear, dates: dates});
+															});
+													}))),
+										function (monthWeeks) {
+											return _elm_lang$core$Json_Decode$succeed(
+												{weekdays: weekdays, months: months, selectedMonth: selectedMonth, selectedYear: selectedYear, monthWeeks: monthWeeks});
+										});
+								});
+						});
 				});
 		}));
 var _user$project$Calendar$Day = F3(
@@ -7351,9 +7414,9 @@ var _user$project$Calendar$Week = F2(
 	function (a, b) {
 		return {weekOfYear: a, dates: b};
 	});
-var _user$project$Calendar$Model = F2(
-	function (a, b) {
-		return {weekdays: a, monthWeeks: b};
+var _user$project$Calendar$Model = F5(
+	function (a, b, c, d, e) {
+		return {weekdays: a, months: b, selectedMonth: c, selectedYear: d, monthWeeks: e};
 	});
 var _user$project$Calendar$Month = function (a) {
 	return {ctor: 'Month', _0: a};
@@ -7407,11 +7470,29 @@ var _user$project$Calendar$main = {
 				_elm_lang$core$Json_Decode$andThen,
 				A2(
 					_elm_lang$core$Json_Decode_ops[':='],
-					'weekdays',
+					'months',
 					_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string)),
-				function (weekdays) {
-					return _elm_lang$core$Json_Decode$succeed(
-						{monthWeeks: monthWeeks, weekdays: weekdays});
+				function (months) {
+					return A2(
+						_elm_lang$core$Json_Decode$andThen,
+						A2(_elm_lang$core$Json_Decode_ops[':='], 'selectedMonth', _elm_lang$core$Json_Decode$int),
+						function (selectedMonth) {
+							return A2(
+								_elm_lang$core$Json_Decode$andThen,
+								A2(_elm_lang$core$Json_Decode_ops[':='], 'selectedYear', _elm_lang$core$Json_Decode$int),
+								function (selectedYear) {
+									return A2(
+										_elm_lang$core$Json_Decode$andThen,
+										A2(
+											_elm_lang$core$Json_Decode_ops[':='],
+											'weekdays',
+											_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string)),
+										function (weekdays) {
+											return _elm_lang$core$Json_Decode$succeed(
+												{monthWeeks: monthWeeks, months: months, selectedMonth: selectedMonth, selectedYear: selectedYear, weekdays: weekdays});
+										});
+								});
+						});
 				});
 		})
 };

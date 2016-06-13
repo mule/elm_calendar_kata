@@ -9,16 +9,16 @@ document.addEventListener('DOMContentLoaded', function() {
    var currentYear  = moment().year();
    var currentDate = moment().date();
    var weeksOfCurrentMonth = getWeeksOfMonth(currentMonth,currentYear);
-   console.log("sending weekdays")
-   app.ports.monthResponse.send({
+
+   var initialState = {
        months: months,
        weekdays: weekdays,
        selectedMonth: currentMonth,
        selectedYear: currentYear,
        selectedDay: currentDate,
-       monthWeeks: weeksOfCurrentMonth});
+       monthWeeks: weeksOfCurrentMonth};
 
-   var app = Elm.Calendar.embed(elmNode, {weekdays: weekdays, monthWeeks: weeksOfCurrentMonth});
+   var app = Elm.Calendar.embed(elmNode, initialState);
    app.ports.monthRequest.subscribe(function(params){
        console.log(params)
        var months = moment.months();
