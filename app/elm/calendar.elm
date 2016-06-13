@@ -2,7 +2,7 @@ port module Calendar exposing (..)
 
 import Html exposing ( text, div, Attribute)
 import Html.Attributes exposing (class, classList)
-import List exposing (concat)
+import List exposing (concat, map2)
 import Html.App as Html
 -- import Html.Events exposing (..)
 import Debug
@@ -85,7 +85,17 @@ row classes content  =
 weekday_columns : List String -> List (Html.Html a)
 
 weekday_columns weekdays =
-    List.map  (\n -> div [class "col s1 weekday"] [text n]) weekdays
+
+    List.map  (\weekday -> div
+                        [
+                            classList [
+                            ("col", True),
+                            ("s1", True),
+                            ("weekday", True),
+                            ("offset-s2", (fst weekday) == 1)
+                            ]
+                        ]
+                        [text <| snd weekday]) <| map2 (,) [1..7] weekdays
 
 week_columns : Week -> List (Html.Html a)
 

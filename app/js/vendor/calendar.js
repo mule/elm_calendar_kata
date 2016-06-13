@@ -7172,19 +7172,40 @@ var _user$project$Calendar$week_rows = function (weeks) {
 var _user$project$Calendar$weekday_columns = function (weekdays) {
 	return A2(
 		_elm_lang$core$List$map,
-		function (n) {
+		function (weekday) {
 			return A2(
 				_elm_lang$html$Html$div,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html_Attributes$class('col s1 weekday')
+						_elm_lang$html$Html_Attributes$classList(
+						_elm_lang$core$Native_List.fromArray(
+							[
+								{ctor: '_Tuple2', _0: 'col', _1: true},
+								{ctor: '_Tuple2', _0: 's1', _1: true},
+								{ctor: '_Tuple2', _0: 'weekday', _1: true},
+								{
+								ctor: '_Tuple2',
+								_0: 'offset-s2',
+								_1: _elm_lang$core$Native_Utils.eq(
+									_elm_lang$core$Basics$fst(weekday),
+									1)
+							}
+							]))
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html$text(n)
+						_elm_lang$html$Html$text(
+						_elm_lang$core$Basics$snd(weekday))
 					]));
 		},
-		weekdays);
+		A3(
+			_elm_lang$core$List$map2,
+			F2(
+				function (v0, v1) {
+					return {ctor: '_Tuple2', _0: v0, _1: v1};
+				}),
+			_elm_lang$core$Native_List.range(1, 7),
+			weekdays));
 };
 var _user$project$Calendar$row = F2(
 	function (classes, content) {

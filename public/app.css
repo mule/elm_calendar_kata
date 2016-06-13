@@ -8177,24 +8177,24 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   }
 }
 
-/* line 2, /Users/jukkapuranen/Documents/projects/elm_calendar_kata/app/scss/main.scss */
+/* line 2, C:/omatProjut/elm_calendar_kata/app/scss/main.scss */
 .weekdayRow {
   margin-bottom: 0px; }
 
-/* line 3, /Users/jukkapuranen/Documents/projects/elm_calendar_kata/app/scss/main.scss */
+/* line 3, C:/omatProjut/elm_calendar_kata/app/scss/main.scss */
 .weekday {
   margin-left: 0.5em;
   margin-right: 0.5em;
   margin-bottom: 0px;
   min-width: 50px; }
 
-/* line 9, /Users/jukkapuranen/Documents/projects/elm_calendar_kata/app/scss/main.scss */
+/* line 9, C:/omatProjut/elm_calendar_kata/app/scss/main.scss */
 .day {
   margin: 0.5em;
   min-width: 50px;
   min-height: 50px; }
 
-/* line 15, /Users/jukkapuranen/Documents/projects/elm_calendar_kata/app/scss/main.scss */
+/* line 15, C:/omatProjut/elm_calendar_kata/app/scss/main.scss */
 .week {
   margin-bottom: 0px; }
 
