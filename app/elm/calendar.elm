@@ -32,10 +32,18 @@ type alias Week =
     , dates : List Day
     }
 
+type alias Month =
+    { monthOfYer : Int}
+
 type alias Model =
     { weekdays : List String
+    , months : List String,
+    , selectedMonth : String
+    , selectedYear : Int
     , monthWeeks : List Week
     }
+
+
 
 init : Model -> (Model, Cmd a )
 
@@ -113,3 +121,5 @@ week_row week =
 day_column : Day -> Html.Html a
 day_column day =
      div [class "col s1 day card-panel teal"] [text (toString day.date)]
+
+ month_row :
