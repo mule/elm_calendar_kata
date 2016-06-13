@@ -7139,6 +7139,36 @@ var _user$project$Calendar$week_columns = function (week) {
 		},
 		week.dates);
 };
+var _user$project$Calendar$week_row = function (week) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('row week')
+			]),
+		A2(
+			_elm_lang$core$List_ops['::'],
+			A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('col s1 offset-s1')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(
+						_elm_lang$core$Basics$toString(week.weekOfYear))
+					])),
+			_user$project$Calendar$week_columns(week)));
+};
+var _user$project$Calendar$week_rows = function (weeks) {
+	return A2(
+		_elm_lang$core$List$map,
+		function (week) {
+			return _user$project$Calendar$week_row(week);
+		},
+		weeks);
+};
 var _user$project$Calendar$weekday_columns = function (weekdays) {
 	return A2(
 		_elm_lang$core$List$map,
@@ -7196,20 +7226,6 @@ var _user$project$Calendar$row = F2(
 								[]))
 						]))));
 	});
-var _user$project$Calendar$week_rows = function (weeks) {
-	return A2(
-		_elm_lang$core$List$map,
-		function (week) {
-			return A2(
-				_user$project$Calendar$row,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						{ctor: '_Tuple2', _0: 'week', _1: true}
-					]),
-				_user$project$Calendar$week_columns(week));
-		},
-		weeks);
-};
 var _user$project$Calendar$view = function (model) {
 	return A4(
 		_elm_lang$core$Debug$log,

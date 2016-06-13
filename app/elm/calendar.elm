@@ -94,7 +94,11 @@ week_columns week =
 
 week_rows : List Week ->  List (Html.Html Msg)
 week_rows weeks =
-    List.map (\week -> row [("week", True)] (week_columns week)) weeks
+    List.map (\week -> week_row week) weeks
+
+week_row : Week -> Html.Html a
+week_row week =
+    div [ class "row week"] (div [class "col s1 offset-s1"] [text (toString week.weekOfYear)] :: week_columns week)
 
 day_column : Day -> Html.Html a
 day_column day =
