@@ -1,6 +1,6 @@
 port module Calendar exposing (..)
 
-import Html exposing ( a, text, div, h4, Attribute)
+import Html exposing ( a, text, div, h4, i, span, Attribute)
 import Html.Attributes exposing (class, classList)
 import List exposing (concat, map2)
 import Html.App as Html
@@ -91,7 +91,6 @@ view model =
 
 row : List (String, Bool) -> List (Html.Html Msg) -> Html.Html Msg
 
-
 row classes content  =
     div ( [ classList ([ ("row", True) ] ++ classes) ]) (div [class "col s2"] [] :: content ++ [div [class "col s3"] []])
 
@@ -130,20 +129,17 @@ day_column day =
 month_row : String -> Int -> Html.Html Msg
 
 month_row month year =
-    let
-
-    in
-        row [] [  prevMonthBtn, (monthDesc_column month year), nextMonthBtn
+        row [] [monthDesc_column month year]
 
 monthDesc_column : String -> Int -> Html.Html a
 
 monthDesc_column month year =
     let
         prevMonthBtn =
-            a [class "btn-floating  waves-effect waves-light"] [ i ["material-icons"] [text "skip_previous"]]
+            a [class "btn-floating  waves-effect waves-light"] [ i [ class "material-icons"] [text "skip_previous"]]
         nextMonthBtn =
-            a [class "btn-floating  waves-effect waves-light"] [ i ["material-icons"] [text "skip_next"]]
-        monthDesc =
-            h4 [class "center-align"]  [text <| join " " [month, (toString year)]]
+            a [class "btn-floating  waves-effect waves-light"] [ i [class "material-icons"] [text "skip_next"]]
+        desc =
+            span [class "month-description"] [text <| join " " [month, (toString year)]]
     in
-        div [ class "col s7 offset-s2"] [prevMonthBtn, monthDesc, nextMonthBtn]
+        div [ class "col s7 offset-s2"] [h4 [class "center-align"]  [prevMonthBtn, desc, nextMonthBtn]]

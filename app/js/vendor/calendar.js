@@ -7118,6 +7118,82 @@ var _elm_lang$html$Html_Attributes$classList = function (list) {
 };
 var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
 
+var _user$project$Calendar$monthDesc_column = F2(
+	function (month, year) {
+		var desc = A2(
+			_elm_lang$html$Html$span,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('month-description')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(
+					A2(
+						_elm_lang$core$String$join,
+						' ',
+						_elm_lang$core$Native_List.fromArray(
+							[
+								month,
+								_elm_lang$core$Basics$toString(year)
+							])))
+				]));
+		var nextMonthBtn = A2(
+			_elm_lang$html$Html$a,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('btn-floating  waves-effect waves-light')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$i,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('material-icons')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text('skip_next')
+						]))
+				]));
+		var prevMonthBtn = A2(
+			_elm_lang$html$Html$a,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('btn-floating  waves-effect waves-light')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$i,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('material-icons')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text('skip_previous')
+						]))
+				]));
+		return A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('col s7 offset-s2')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$h4,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('center-align')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[prevMonthBtn, desc, nextMonthBtn]))
+				]));
+	});
 var _user$project$Calendar$day_column = function (day) {
 	return A2(
 		_elm_lang$html$Html$div,
@@ -7255,33 +7331,7 @@ var _user$project$Calendar$month_row = F2(
 				[]),
 			_elm_lang$core$Native_List.fromArray(
 				[
-					A2(
-					_elm_lang$html$Html$div,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Attributes$class('col s7 offset-s2')
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							A2(
-							_elm_lang$html$Html$h4,
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_elm_lang$html$Html_Attributes$class('center-align')
-								]),
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_elm_lang$html$Html$text(
-									A2(
-										_elm_lang$core$String$join,
-										' ',
-										_elm_lang$core$Native_List.fromArray(
-											[
-												month,
-												_elm_lang$core$Basics$toString(year)
-											])))
-								]))
-						]))
+					A2(_user$project$Calendar$monthDesc_column, month, year)
 				]));
 	});
 var _user$project$Calendar$view = function (model) {
