@@ -1,6 +1,6 @@
 port module Calendar exposing (..)
 
-import Html exposing ( text, div, h4, Attribute)
+import Html exposing ( a, text, div, h4, Attribute)
 import Html.Attributes exposing (class, classList)
 import List exposing (concat, map2)
 import Html.App as Html
@@ -130,4 +130,20 @@ day_column day =
 month_row : String -> Int -> Html.Html Msg
 
 month_row month year =
-    row [] [ div [ class "col s7 offset-s2"] [ (h4 [class "center-align"]  [text <| join " " [month, (toString year)]]) ]]
+    let
+
+    in
+        row [] [  prevMonthBtn, (monthDesc_column month year), nextMonthBtn
+
+monthDesc_column : String -> Int -> Html.Html a
+
+monthDesc_column month year =
+    let
+        prevMonthBtn =
+            a [class "btn-floating  waves-effect waves-light"] [ i ["material-icons"] [text "skip_previous"]]
+        nextMonthBtn =
+            a [class "btn-floating  waves-effect waves-light"] [ i ["material-icons"] [text "skip_next"]]
+        monthDesc =
+            h4 [class "center-align"]  [text <| join " " [month, (toString year)]]
+    in
+        div [ class "col s7 offset-s2"] [prevMonthBtn, monthDesc, nextMonthBtn]
