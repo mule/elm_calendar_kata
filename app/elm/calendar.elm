@@ -6,7 +6,7 @@ import List exposing (concat, map2)
 import Html.App as Html
 import String exposing (join)
 import Array exposing (Array)
--- import Html.Events exposing (..)
+import Html.Events exposing (onClick)
 import Debug
 --import Task
 
@@ -53,7 +53,7 @@ init flags =
     (flags, Cmd.none )
 
 type Msg
-    = GetMonth
+    = GetMonth Int
     | Month Model
 
 port monthRequest : Int -> Cmd msg
@@ -64,12 +64,12 @@ port monthRequest : Int -> Cmd msg
 
 update : Msg -> Model -> (Model, Cmd Msg)
 
-update action model =
-    case action of
-        GetMonth ->
-            (model, monthRequest 1)
+update  action model =
+    case Debug.log "action" action of
+        GetMonth month ->
+            (model, monthRequest month)
         Month response ->
-            (response, Cmd.none)
+            (Model model.monthWeeks response.monthWeeks, Cmd.none)
 
 port monthResponse : (Model -> msg) -> Sub msg
 
@@ -86,7 +86,7 @@ view model =
         monthName =
             Maybe.withDefault "Unknown" <| Array.get model.selectedMonth (Array.fromList model.months)
     in
-            div [class "month"] ((month_row monthName model.selectedYear) :: row [("weekdayRow", True)] (weekday_columns model.weekdays) :: week_rows model.monthWeeks)
+            div [class "month"] ((month_row model.selectedMonth monthName model.selectedYear) :: row [("weekdayRow", True)] (weekday_columns model.weekdays) :: week_rows model.monthWeeks)
 
 
 row : List (String, Bool) -> List (Html.Html Msg) -> Html.Html Msg
@@ -126,20 +126,35 @@ day_column : Day -> Html.Html a
 day_column day =
      div [class "col s1 day card-panel teal"] [text (toString day.date)]
 
-month_row : String -> Int -> Html.Html Msg
+nextMonth : Int -> Int
+nextMonth currentMonth =
+    if currentMonth == 11 then
+        0
+    else
+        currentMonth + 1
 
-month_row month year =
-        row [] [monthDesc_column month year]
+prevMonth : Int -> Int
 
-monthDesc_column : String -> Int -> Html.Html a
+prevMonth currentMonth =
+    if currentMonth == 0 then
+        11
+    else
+        currentMonth - 1
 
-monthDesc_column month year =
+
+month_row : Int -> String -> Int -> Html.Html Msg
+
+month_row month monthName year =
+        row [] [monthDesc_column month monthName year]
+
+monthDesc_column : Int -> String -> Int -> Html.Html Msg
+monthDesc_column month monthName year =
     let
         prevMonthBtn =
-            a [class "btn-floating  waves-effect waves-light"] [ i [ class "material-icons"] [text "skip_previous"]]
+            a [class "btn-floating  waves-effect waves-light", onClick <| GetMonth <| prevMonth month] [ i [ class "material-icons"] [text "skip_previous"]]
         nextMonthBtn =
-            a [class "btn-floating  waves-effect waves-light"] [ i [class "material-icons"] [text "skip_next"]]
+            a [class "btn-floating  waves-effect waves-light", onClick <| GetMonth <| nextMonth month ] [ i [class "material-icons"] [text "skip_next"]]
         desc =
-            span [class "month-description"] [text <| join " " [month, (toString year)]]
+            span [class "month-description"] [text <| join " " [monthName, (toString year)]]
     in
         div [ class "col s7 offset-s2"] [h4 [class "center-align"]  [prevMonthBtn, desc, nextMonthBtn]]

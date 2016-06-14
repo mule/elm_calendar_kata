@@ -7118,82 +7118,113 @@ var _elm_lang$html$Html_Attributes$classList = function (list) {
 };
 var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
 
-var _user$project$Calendar$monthDesc_column = F2(
-	function (month, year) {
-		var desc = A2(
-			_elm_lang$html$Html$span,
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_elm_lang$html$Html_Attributes$class('month-description')
-				]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_elm_lang$html$Html$text(
-					A2(
-						_elm_lang$core$String$join,
-						' ',
-						_elm_lang$core$Native_List.fromArray(
-							[
-								month,
-								_elm_lang$core$Basics$toString(year)
-							])))
-				]));
-		var nextMonthBtn = A2(
-			_elm_lang$html$Html$a,
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_elm_lang$html$Html_Attributes$class('btn-floating  waves-effect waves-light')
-				]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					A2(
-					_elm_lang$html$Html$i,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Attributes$class('material-icons')
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html$text('skip_next')
-						]))
-				]));
-		var prevMonthBtn = A2(
-			_elm_lang$html$Html$a,
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_elm_lang$html$Html_Attributes$class('btn-floating  waves-effect waves-light')
-				]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					A2(
-					_elm_lang$html$Html$i,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Attributes$class('material-icons')
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html$text('skip_previous')
-						]))
-				]));
-		return A2(
-			_elm_lang$html$Html$div,
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_elm_lang$html$Html_Attributes$class('col s7 offset-s2')
-				]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					A2(
-					_elm_lang$html$Html$h4,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Attributes$class('center-align')
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[prevMonthBtn, desc, nextMonthBtn]))
-				]));
+var _elm_lang$html$Html_Events$keyCode = A2(_elm_lang$core$Json_Decode_ops[':='], 'keyCode', _elm_lang$core$Json_Decode$int);
+var _elm_lang$html$Html_Events$targetChecked = A2(
+	_elm_lang$core$Json_Decode$at,
+	_elm_lang$core$Native_List.fromArray(
+		['target', 'checked']),
+	_elm_lang$core$Json_Decode$bool);
+var _elm_lang$html$Html_Events$targetValue = A2(
+	_elm_lang$core$Json_Decode$at,
+	_elm_lang$core$Native_List.fromArray(
+		['target', 'value']),
+	_elm_lang$core$Json_Decode$string);
+var _elm_lang$html$Html_Events$defaultOptions = _elm_lang$virtual_dom$VirtualDom$defaultOptions;
+var _elm_lang$html$Html_Events$onWithOptions = _elm_lang$virtual_dom$VirtualDom$onWithOptions;
+var _elm_lang$html$Html_Events$on = _elm_lang$virtual_dom$VirtualDom$on;
+var _elm_lang$html$Html_Events$onFocus = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'focus',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onBlur = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'blur',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onSubmitOptions = _elm_lang$core$Native_Utils.update(
+	_elm_lang$html$Html_Events$defaultOptions,
+	{preventDefault: true});
+var _elm_lang$html$Html_Events$onSubmit = function (msg) {
+	return A3(
+		_elm_lang$html$Html_Events$onWithOptions,
+		'submit',
+		_elm_lang$html$Html_Events$onSubmitOptions,
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onCheck = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'change',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetChecked));
+};
+var _elm_lang$html$Html_Events$onInput = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'input',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetValue));
+};
+var _elm_lang$html$Html_Events$onMouseOut = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseout',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseOver = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseover',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseLeave = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseleave',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseEnter = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseenter',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseUp = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseup',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseDown = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mousedown',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onDoubleClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'dblclick',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'click',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$Options = F2(
+	function (a, b) {
+		return {stopPropagation: a, preventDefault: b};
 	});
+
+var _user$project$Calendar$prevMonth = function (currentMonth) {
+	return _elm_lang$core$Native_Utils.eq(currentMonth, 0) ? 11 : (currentMonth - 1);
+};
+var _user$project$Calendar$nextMonth = function (currentMonth) {
+	return _elm_lang$core$Native_Utils.eq(currentMonth, 11) ? 0 : (currentMonth + 1);
+};
 var _user$project$Calendar$day_column = function (day) {
 	return A2(
 		_elm_lang$html$Html$div,
@@ -7323,45 +7354,6 @@ var _user$project$Calendar$row = F2(
 								[]))
 						]))));
 	});
-var _user$project$Calendar$month_row = F2(
-	function (month, year) {
-		return A2(
-			_user$project$Calendar$row,
-			_elm_lang$core$Native_List.fromArray(
-				[]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					A2(_user$project$Calendar$monthDesc_column, month, year)
-				]));
-	});
-var _user$project$Calendar$view = function (model) {
-	var monthName = A2(
-		_elm_lang$core$Maybe$withDefault,
-		'Unknown',
-		A2(
-			_elm_lang$core$Array$get,
-			model.selectedMonth,
-			_elm_lang$core$Array$fromList(model.months)));
-	return A2(
-		_elm_lang$html$Html$div,
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html_Attributes$class('month')
-			]),
-		A2(
-			_elm_lang$core$List_ops['::'],
-			A2(_user$project$Calendar$month_row, monthName, model.selectedYear),
-			A2(
-				_elm_lang$core$List_ops['::'],
-				A2(
-					_user$project$Calendar$row,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							{ctor: '_Tuple2', _0: 'weekdayRow', _1: true}
-						]),
-					_user$project$Calendar$weekday_columns(model.weekdays)),
-				_user$project$Calendar$week_rows(model.monthWeeks))));
-};
 var _user$project$Calendar$init = function (flags) {
 	return A2(
 		_elm_lang$core$Debug$log,
@@ -7375,12 +7367,12 @@ var _user$project$Calendar$monthRequest = _elm_lang$core$Native_Platform.outgoin
 	});
 var _user$project$Calendar$update = F2(
 	function (action, model) {
-		var _p0 = action;
+		var _p0 = A2(_elm_lang$core$Debug$log, 'action', action);
 		if (_p0.ctor === 'GetMonth') {
 			return {
 				ctor: '_Tuple2',
 				_0: model,
-				_1: _user$project$Calendar$monthRequest(1)
+				_1: _user$project$Calendar$monthRequest(_p0._0)
 			};
 		} else {
 			return {ctor: '_Tuple2', _0: _p0._0, _1: _elm_lang$core$Platform_Cmd$none};
@@ -7474,6 +7466,130 @@ var _user$project$Calendar$Month = function (a) {
 var _user$project$Calendar$subscriptions = function (model) {
 	return _user$project$Calendar$monthResponse(_user$project$Calendar$Month);
 };
+var _user$project$Calendar$GetMonth = function (a) {
+	return {ctor: 'GetMonth', _0: a};
+};
+var _user$project$Calendar$monthDesc_column = F3(
+	function (month, monthName, year) {
+		var desc = A2(
+			_elm_lang$html$Html$span,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('month-description')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(
+					A2(
+						_elm_lang$core$String$join,
+						' ',
+						_elm_lang$core$Native_List.fromArray(
+							[
+								monthName,
+								_elm_lang$core$Basics$toString(year)
+							])))
+				]));
+		var nextMonthBtn = A2(
+			_elm_lang$html$Html$a,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('btn-floating  waves-effect waves-light'),
+					_elm_lang$html$Html_Events$onClick(
+					_user$project$Calendar$GetMonth(
+						_user$project$Calendar$nextMonth(month)))
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$i,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('material-icons')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text('skip_next')
+						]))
+				]));
+		var prevMonthBtn = A2(
+			_elm_lang$html$Html$a,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('btn-floating  waves-effect waves-light'),
+					_elm_lang$html$Html_Events$onClick(
+					_user$project$Calendar$GetMonth(
+						_user$project$Calendar$prevMonth(month)))
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$i,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('material-icons')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text('skip_previous')
+						]))
+				]));
+		return A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('col s7 offset-s2')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$h4,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('center-align')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[prevMonthBtn, desc, nextMonthBtn]))
+				]));
+	});
+var _user$project$Calendar$month_row = F3(
+	function (month, monthName, year) {
+		return A2(
+			_user$project$Calendar$row,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A3(_user$project$Calendar$monthDesc_column, month, monthName, year)
+				]));
+	});
+var _user$project$Calendar$view = function (model) {
+	var monthName = A2(
+		_elm_lang$core$Maybe$withDefault,
+		'Unknown',
+		A2(
+			_elm_lang$core$Array$get,
+			model.selectedMonth,
+			_elm_lang$core$Array$fromList(model.months)));
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('month')
+			]),
+		A2(
+			_elm_lang$core$List_ops['::'],
+			A3(_user$project$Calendar$month_row, model.selectedMonth, monthName, model.selectedYear),
+			A2(
+				_elm_lang$core$List_ops['::'],
+				A2(
+					_user$project$Calendar$row,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							{ctor: '_Tuple2', _0: 'weekdayRow', _1: true}
+						]),
+					_user$project$Calendar$weekday_columns(model.weekdays)),
+				_user$project$Calendar$week_rows(model.monthWeeks))));
+};
 var _user$project$Calendar$main = {
 	main: _elm_lang$html$Html_App$programWithFlags(
 		{init: _user$project$Calendar$init, view: _user$project$Calendar$view, update: _user$project$Calendar$update, subscriptions: _user$project$Calendar$subscriptions}),
@@ -7546,7 +7662,6 @@ var _user$project$Calendar$main = {
 				});
 		})
 };
-var _user$project$Calendar$GetMonth = {ctor: 'GetMonth'};
 
 var Elm = {};
 Elm['Calendar'] = Elm['Calendar'] || {};
