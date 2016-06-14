@@ -8,8 +8,8 @@ import String exposing (join)
 import Array exposing (Array)
 import Html.Events exposing (onClick)
 import Debug
---import Task
 
+--import Task
 
 main : Program Model
 main =
@@ -34,16 +34,18 @@ type alias Week =
     , dates : List Day
     }
 
-
-
 type alias Model =
     { weekdays : List String
+    , monthWeeks : List Week
     , months : List String
     , selectedMonth : Int
     , selectedYear : Int
-    , monthWeeks : List Week
     }
 
+type alias MonthRequestResponse =
+    { selectedMonth : Int
+    , selectedYear : Int
+    , monthWeeks : List Week}
 
 
 init : Model -> (Model, Cmd a )
@@ -53,10 +55,10 @@ init flags =
     (flags, Cmd.none )
 
 type Msg
-    = GetMonth Int
-    | Month Model
+    = GetMonth (Int,Int)
+    | Month MonthRequestResponse
 
-port monthRequest : Int -> Cmd msg
+port monthRequest : (Int,Int) -> Cmd msg
 
 --send : String -> Cmd Msg
 --send msg =
@@ -66,17 +68,20 @@ update : Msg -> Model -> (Model, Cmd Msg)
 
 update  action model =
     case Debug.log "action" action of
-        GetMonth month ->
-            (model, monthRequest month)
+        GetMonth (month, year) ->
+            (model, monthRequest (month, year))
         Month response ->
-            (Model model.monthWeeks response.monthWeeks, Cmd.none)
+            ( { model | monthWeeks = response.monthWeeks,
+                        selectedMonth = response.selectedMonth,
+                        selectedYear = response.selectedYear
+                } , Cmd.none)
 
-port monthResponse : (Model -> msg) -> Sub msg
+port monthResponse : (MonthRequestResponse -> msg) -> Sub msg
 
 subscriptions : Model -> Sub Msg
 
 subscriptions model =
-    monthResponse Month
+    monthResponse  Month
 
 view : Model -> Html.Html Msg
 
@@ -87,7 +92,6 @@ view model =
             Maybe.withDefault "Unknown" <| Array.get model.selectedMonth (Array.fromList model.months)
     in
             div [class "month"] ((month_row model.selectedMonth monthName model.selectedYear) :: row [("weekdayRow", True)] (weekday_columns model.weekdays) :: week_rows model.monthWeeks)
-
 
 row : List (String, Bool) -> List (Html.Html Msg) -> Html.Html Msg
 
@@ -126,20 +130,20 @@ day_column : Day -> Html.Html a
 day_column day =
      div [class "col s1 day card-panel teal"] [text (toString day.date)]
 
-nextMonth : Int -> Int
-nextMonth currentMonth =
+nextMonth : Int -> Int -> (Int,Int)
+nextMonth currentMonth currentYear  =
     if currentMonth == 11 then
-        0
+        (0,currentYear + 1)
     else
-        currentMonth + 1
+        (currentMonth + 1, currentYear)
 
-prevMonth : Int -> Int
+prevMonth : Int -> Int -> (Int,Int)
 
-prevMonth currentMonth =
+prevMonth currentMonth currentYear =
     if currentMonth == 0 then
-        11
+        (11, currentYear - 1)
     else
-        currentMonth - 1
+        (currentMonth - 1, currentYear)
 
 
 month_row : Int -> String -> Int -> Html.Html Msg
@@ -151,9 +155,9 @@ monthDesc_column : Int -> String -> Int -> Html.Html Msg
 monthDesc_column month monthName year =
     let
         prevMonthBtn =
-            a [class "btn-floating  waves-effect waves-light", onClick <| GetMonth <| prevMonth month] [ i [ class "material-icons"] [text "skip_previous"]]
+            a [class "btn-floating  waves-effect waves-light", onClick <| GetMonth <| prevMonth month year ] [ i [ class "material-icons"] [text "skip_previous"]]
         nextMonthBtn =
-            a [class "btn-floating  waves-effect waves-light", onClick <| GetMonth <| nextMonth month ] [ i [class "material-icons"] [text "skip_next"]]
+            a [class "btn-floating  waves-effect waves-light", onClick <| GetMonth <| nextMonth month year ] [ i [class "material-icons"] [text "skip_next"]]
         desc =
             span [class "month-description"] [text <| join " " [monthName, (toString year)]]
     in

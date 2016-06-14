@@ -19,21 +19,13 @@ document.addEventListener('DOMContentLoaded', function() {
        monthWeeks: weeksOfCurrentMonth};
 
    var app = Elm.Calendar.embed(elmNode, initialState);
-   app.ports.monthRequest.subscribe(function(params){
-       console.log(params)
-       var months = moment.months();
-       var weekdays = moment.weekdaysMin();
-       var currentMonth = moment().month();
-       var currentYear  = moment().year();
-       var currentDate = moment().date();
-       var weeksOfCurrentMonth = getWeeksOfMonth(currentMonth,currentYear);
-       console.log("sending weekdays")
-       app.ports.monthResponse.send({
-           months: months,
-           weekdays: weekdays,
-           selectedMonth: currentMonth,
-           selectedYear: currentYear,
-           selectedDay: currentDate,
-           monthWeeks: weeksOfCurrentMonth});
+   app.ports.monthRequest.subscribe(function(pair){
+       console.log(pair)
+       var month = pair[0];
+       var year = pair[1];
+       var weeksOfMonth = getWeeksOfMonth(month, year);
+       var response = { monthWeeks: weeksOfMonth, selectedMonth: month, selectedYear: year};
+       console.log("sending weeks")
+       app.ports.monthResponse.send(response);
    })
 });

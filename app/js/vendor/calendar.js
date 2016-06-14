@@ -7219,12 +7219,14 @@ var _elm_lang$html$Html_Events$Options = F2(
 		return {stopPropagation: a, preventDefault: b};
 	});
 
-var _user$project$Calendar$prevMonth = function (currentMonth) {
-	return _elm_lang$core$Native_Utils.eq(currentMonth, 0) ? 11 : (currentMonth - 1);
-};
-var _user$project$Calendar$nextMonth = function (currentMonth) {
-	return _elm_lang$core$Native_Utils.eq(currentMonth, 11) ? 0 : (currentMonth + 1);
-};
+var _user$project$Calendar$prevMonth = F2(
+	function (currentMonth, currentYear) {
+		return _elm_lang$core$Native_Utils.eq(currentMonth, 0) ? {ctor: '_Tuple2', _0: 11, _1: currentYear - 1} : {ctor: '_Tuple2', _0: currentMonth - 1, _1: currentYear};
+	});
+var _user$project$Calendar$nextMonth = F2(
+	function (currentMonth, currentYear) {
+		return _elm_lang$core$Native_Utils.eq(currentMonth, 11) ? {ctor: '_Tuple2', _0: 0, _1: currentYear + 1} : {ctor: '_Tuple2', _0: currentMonth + 1, _1: currentYear};
+	});
 var _user$project$Calendar$day_column = function (day) {
 	return A2(
 		_elm_lang$html$Html$div,
@@ -7363,7 +7365,7 @@ var _user$project$Calendar$init = function (flags) {
 var _user$project$Calendar$monthRequest = _elm_lang$core$Native_Platform.outgoingPort(
 	'monthRequest',
 	function (v) {
-		return v;
+		return [v._0, v._1];
 	});
 var _user$project$Calendar$update = F2(
 	function (action, model) {
@@ -7372,79 +7374,71 @@ var _user$project$Calendar$update = F2(
 			return {
 				ctor: '_Tuple2',
 				_0: model,
-				_1: _user$project$Calendar$monthRequest(_p0._0)
+				_1: _user$project$Calendar$monthRequest(
+					{ctor: '_Tuple2', _0: _p0._0._0, _1: _p0._0._1})
 			};
 		} else {
-			return {ctor: '_Tuple2', _0: _p0._0, _1: _elm_lang$core$Platform_Cmd$none};
+			var _p1 = _p0._0;
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					model,
+					{monthWeeks: _p1.monthWeeks, selectedMonth: _p1.selectedMonth, selectedYear: _p1.selectedYear}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
 		}
 	});
 var _user$project$Calendar$monthResponse = _elm_lang$core$Native_Platform.incomingPort(
 	'monthResponse',
 	A2(
 		_elm_lang$core$Json_Decode$andThen,
-		A2(
-			_elm_lang$core$Json_Decode_ops[':='],
-			'weekdays',
-			_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string)),
-		function (weekdays) {
+		A2(_elm_lang$core$Json_Decode_ops[':='], 'selectedMonth', _elm_lang$core$Json_Decode$int),
+		function (selectedMonth) {
 			return A2(
 				_elm_lang$core$Json_Decode$andThen,
-				A2(
-					_elm_lang$core$Json_Decode_ops[':='],
-					'months',
-					_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string)),
-				function (months) {
+				A2(_elm_lang$core$Json_Decode_ops[':='], 'selectedYear', _elm_lang$core$Json_Decode$int),
+				function (selectedYear) {
 					return A2(
 						_elm_lang$core$Json_Decode$andThen,
-						A2(_elm_lang$core$Json_Decode_ops[':='], 'selectedMonth', _elm_lang$core$Json_Decode$int),
-						function (selectedMonth) {
-							return A2(
-								_elm_lang$core$Json_Decode$andThen,
-								A2(_elm_lang$core$Json_Decode_ops[':='], 'selectedYear', _elm_lang$core$Json_Decode$int),
-								function (selectedYear) {
-									return A2(
-										_elm_lang$core$Json_Decode$andThen,
-										A2(
-											_elm_lang$core$Json_Decode_ops[':='],
-											'monthWeeks',
-											_elm_lang$core$Json_Decode$list(
-												A2(
-													_elm_lang$core$Json_Decode$andThen,
-													A2(_elm_lang$core$Json_Decode_ops[':='], 'weekOfYear', _elm_lang$core$Json_Decode$int),
-													function (weekOfYear) {
-														return A2(
-															_elm_lang$core$Json_Decode$andThen,
-															A2(
-																_elm_lang$core$Json_Decode_ops[':='],
-																'dates',
-																_elm_lang$core$Json_Decode$list(
-																	A2(
+						A2(
+							_elm_lang$core$Json_Decode_ops[':='],
+							'monthWeeks',
+							_elm_lang$core$Json_Decode$list(
+								A2(
+									_elm_lang$core$Json_Decode$andThen,
+									A2(_elm_lang$core$Json_Decode_ops[':='], 'weekOfYear', _elm_lang$core$Json_Decode$int),
+									function (weekOfYear) {
+										return A2(
+											_elm_lang$core$Json_Decode$andThen,
+											A2(
+												_elm_lang$core$Json_Decode_ops[':='],
+												'dates',
+												_elm_lang$core$Json_Decode$list(
+													A2(
+														_elm_lang$core$Json_Decode$andThen,
+														A2(_elm_lang$core$Json_Decode_ops[':='], 'weekDay', _elm_lang$core$Json_Decode$int),
+														function (weekDay) {
+															return A2(
+																_elm_lang$core$Json_Decode$andThen,
+																A2(_elm_lang$core$Json_Decode_ops[':='], 'date', _elm_lang$core$Json_Decode$int),
+																function (date) {
+																	return A2(
 																		_elm_lang$core$Json_Decode$andThen,
-																		A2(_elm_lang$core$Json_Decode_ops[':='], 'weekDay', _elm_lang$core$Json_Decode$int),
-																		function (weekDay) {
-																			return A2(
-																				_elm_lang$core$Json_Decode$andThen,
-																				A2(_elm_lang$core$Json_Decode_ops[':='], 'date', _elm_lang$core$Json_Decode$int),
-																				function (date) {
-																					return A2(
-																						_elm_lang$core$Json_Decode$andThen,
-																						A2(_elm_lang$core$Json_Decode_ops[':='], 'month', _elm_lang$core$Json_Decode$int),
-																						function (month) {
-																							return _elm_lang$core$Json_Decode$succeed(
-																								{weekDay: weekDay, date: date, month: month});
-																						});
-																				});
-																		}))),
-															function (dates) {
-																return _elm_lang$core$Json_Decode$succeed(
-																	{weekOfYear: weekOfYear, dates: dates});
-															});
-													}))),
-										function (monthWeeks) {
-											return _elm_lang$core$Json_Decode$succeed(
-												{weekdays: weekdays, months: months, selectedMonth: selectedMonth, selectedYear: selectedYear, monthWeeks: monthWeeks});
-										});
-								});
+																		A2(_elm_lang$core$Json_Decode_ops[':='], 'month', _elm_lang$core$Json_Decode$int),
+																		function (month) {
+																			return _elm_lang$core$Json_Decode$succeed(
+																				{weekDay: weekDay, date: date, month: month});
+																		});
+																});
+														}))),
+											function (dates) {
+												return _elm_lang$core$Json_Decode$succeed(
+													{weekOfYear: weekOfYear, dates: dates});
+											});
+									}))),
+						function (monthWeeks) {
+							return _elm_lang$core$Json_Decode$succeed(
+								{selectedMonth: selectedMonth, selectedYear: selectedYear, monthWeeks: monthWeeks});
 						});
 				});
 		}));
@@ -7458,7 +7452,11 @@ var _user$project$Calendar$Week = F2(
 	});
 var _user$project$Calendar$Model = F5(
 	function (a, b, c, d, e) {
-		return {weekdays: a, months: b, selectedMonth: c, selectedYear: d, monthWeeks: e};
+		return {weekdays: a, monthWeeks: b, months: c, selectedMonth: d, selectedYear: e};
+	});
+var _user$project$Calendar$MonthRequestResponse = F3(
+	function (a, b, c) {
+		return {selectedMonth: a, selectedYear: b, monthWeeks: c};
 	});
 var _user$project$Calendar$Month = function (a) {
 	return {ctor: 'Month', _0: a};
@@ -7496,7 +7494,7 @@ var _user$project$Calendar$monthDesc_column = F3(
 					_elm_lang$html$Html_Attributes$class('btn-floating  waves-effect waves-light'),
 					_elm_lang$html$Html_Events$onClick(
 					_user$project$Calendar$GetMonth(
-						_user$project$Calendar$nextMonth(month)))
+						A2(_user$project$Calendar$nextMonth, month, year)))
 				]),
 			_elm_lang$core$Native_List.fromArray(
 				[
@@ -7518,7 +7516,7 @@ var _user$project$Calendar$monthDesc_column = F3(
 					_elm_lang$html$Html_Attributes$class('btn-floating  waves-effect waves-light'),
 					_elm_lang$html$Html_Events$onClick(
 					_user$project$Calendar$GetMonth(
-						_user$project$Calendar$prevMonth(month)))
+						A2(_user$project$Calendar$prevMonth, month, year)))
 				]),
 			_elm_lang$core$Native_List.fromArray(
 				[
