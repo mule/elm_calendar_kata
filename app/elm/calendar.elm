@@ -91,7 +91,7 @@ view model =
         monthName =
             Maybe.withDefault "Unknown" <| Array.get model.selectedMonth (Array.fromList model.months)
     in
-            div [class "month"] ((month_row model.selectedMonth monthName model.selectedYear) :: row [("weekdayRow", True)] (weekday_columns model.weekdays) :: week_rows model.monthWeeks)
+            div [class "month"] ((month_row model.selectedMonth monthName model.selectedYear) :: row [("weekdayRow", True)] (weekday_columns model.weekdays) :: (week_rows model.monthWeeks model.selectedMonth))
 
 row : List (String, Bool) -> List (Html.Html Msg) -> Html.Html Msg
 
@@ -116,15 +116,15 @@ weekday_columns weekdays =
 week_columns : Week -> Int -> List (Html.Html a)
 
 week_columns week selectedMonth =
-     List.map (\day -> day_column day) week.dates
+     List.map (\day -> (day_column day selectedMonth)) week.dates
 
 week_rows : List Week -> Int -> List (Html.Html Msg)
 week_rows weeks selectedMonth =
-    List.map (\week -> week_row week) weeks
+    List.map (\week -> (week_row week selectedMonth)) weeks
 
 week_row : Week -> Int -> Html.Html a
 week_row week selectedMonth =
-    div [ class "row week"] (div [class "col s1 offset-s1"] [text (toString week.weekOfYear)] :: week_columns week selectedMonth)
+    div [ class "row week"] (div [class "col s1 offset-s1"] [text (toString week.weekOfYear)] :: (week_columns week selectedMonth))
 
 day_column : Day -> Int -> Html.Html a
 day_column day selectedMonth =
@@ -134,7 +134,9 @@ day_column day selectedMonth =
         ("day", True),
         ("card-panel", True),
         ("teal", True),
-        ("currentMonth", day.month == selectedMonth)]
+        ("currentMonth", day.month == selectedMonth),
+        ("lighten-4", day.month /= selectedMonth)
+        ]
     in
         div [classList classes] [text (toString day.date)]
 

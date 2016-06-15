@@ -7227,57 +7227,79 @@ var _user$project$Calendar$nextMonth = F2(
 	function (currentMonth, currentYear) {
 		return _elm_lang$core$Native_Utils.eq(currentMonth, 11) ? {ctor: '_Tuple2', _0: 0, _1: currentYear + 1} : {ctor: '_Tuple2', _0: currentMonth + 1, _1: currentYear};
 	});
-var _user$project$Calendar$day_column = function (day) {
-	return A2(
-		_elm_lang$html$Html$div,
-		_elm_lang$core$Native_List.fromArray(
+var _user$project$Calendar$day_column = F2(
+	function (day, selectedMonth) {
+		var classes = _elm_lang$core$Native_List.fromArray(
 			[
-				_elm_lang$html$Html_Attributes$class('col s1 day card-panel teal')
-			]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html$text(
-				_elm_lang$core$Basics$toString(day.date))
-			]));
-};
-var _user$project$Calendar$week_columns = function (week) {
-	return A2(
-		_elm_lang$core$List$map,
-		function (day) {
-			return _user$project$Calendar$day_column(day);
-		},
-		week.dates);
-};
-var _user$project$Calendar$week_row = function (week) {
-	return A2(
-		_elm_lang$html$Html$div,
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html_Attributes$class('row week')
-			]),
-		A2(
-			_elm_lang$core$List_ops['::'],
+				{ctor: '_Tuple2', _0: 'col', _1: true},
+				{ctor: '_Tuple2', _0: 's1', _1: true},
+				{ctor: '_Tuple2', _0: 'day', _1: true},
+				{ctor: '_Tuple2', _0: 'card-panel', _1: true},
+				{ctor: '_Tuple2', _0: 'teal', _1: true},
+				{
+				ctor: '_Tuple2',
+				_0: 'currentMonth',
+				_1: _elm_lang$core$Native_Utils.eq(day.month, selectedMonth)
+			},
+				{
+				ctor: '_Tuple2',
+				_0: 'lighten-4',
+				_1: !_elm_lang$core$Native_Utils.eq(day.month, selectedMonth)
+			}
+			]);
+		return A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$classList(classes)
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(
+					_elm_lang$core$Basics$toString(day.date))
+				]));
+	});
+var _user$project$Calendar$week_columns = F2(
+	function (week, selectedMonth) {
+		return A2(
+			_elm_lang$core$List$map,
+			function (day) {
+				return A2(_user$project$Calendar$day_column, day, selectedMonth);
+			},
+			week.dates);
+	});
+var _user$project$Calendar$week_row = F2(
+	function (week, selectedMonth) {
+		return A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('row week')
+				]),
 			A2(
-				_elm_lang$html$Html$div,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$class('col s1 offset-s1')
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text(
-						_elm_lang$core$Basics$toString(week.weekOfYear))
-					])),
-			_user$project$Calendar$week_columns(week)));
-};
-var _user$project$Calendar$week_rows = function (weeks) {
-	return A2(
-		_elm_lang$core$List$map,
-		function (week) {
-			return _user$project$Calendar$week_row(week);
-		},
-		weeks);
-};
+				_elm_lang$core$List_ops['::'],
+				A2(
+					_elm_lang$html$Html$div,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('col s1 offset-s1')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text(
+							_elm_lang$core$Basics$toString(week.weekOfYear))
+						])),
+				A2(_user$project$Calendar$week_columns, week, selectedMonth)));
+	});
+var _user$project$Calendar$week_rows = F2(
+	function (weeks, selectedMonth) {
+		return A2(
+			_elm_lang$core$List$map,
+			function (week) {
+				return A2(_user$project$Calendar$week_row, week, selectedMonth);
+			},
+			weeks);
+	});
 var _user$project$Calendar$weekday_columns = function (weekdays) {
 	return A2(
 		_elm_lang$core$List$map,
@@ -7586,7 +7608,7 @@ var _user$project$Calendar$view = function (model) {
 							{ctor: '_Tuple2', _0: 'weekdayRow', _1: true}
 						]),
 					_user$project$Calendar$weekday_columns(model.weekdays)),
-				_user$project$Calendar$week_rows(model.monthWeeks))));
+				A2(_user$project$Calendar$week_rows, model.monthWeeks, model.selectedMonth))));
 };
 var _user$project$Calendar$main = {
 	main: _elm_lang$html$Html_App$programWithFlags(
