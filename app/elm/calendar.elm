@@ -113,22 +113,30 @@ weekday_columns weekdays =
                         ]
                         [text <| snd weekday]) <| map2 (,) [1..7] weekdays
 
-week_columns : Week -> List (Html.Html a)
+week_columns : Week -> Int -> List (Html.Html a)
 
-week_columns week =
+week_columns week selectedMonth =
      List.map (\day -> day_column day) week.dates
 
-week_rows : List Week ->  List (Html.Html Msg)
-week_rows weeks =
+week_rows : List Week -> Int -> List (Html.Html Msg)
+week_rows weeks selectedMonth =
     List.map (\week -> week_row week) weeks
 
-week_row : Week -> Html.Html a
-week_row week =
-    div [ class "row week"] (div [class "col s1 offset-s1"] [text (toString week.weekOfYear)] :: week_columns week)
+week_row : Week -> Int -> Html.Html a
+week_row week selectedMonth =
+    div [ class "row week"] (div [class "col s1 offset-s1"] [text (toString week.weekOfYear)] :: week_columns week selectedMonth)
 
-day_column : Day -> Html.Html a
-day_column day =
-     div [class "col s1 day card-panel teal"] [text (toString day.date)]
+day_column : Day -> Int -> Html.Html a
+day_column day selectedMonth =
+    let classes =
+        [("col", True),
+        ("s1", True),
+        ("day", True),
+        ("card-panel", True),
+        ("teal", True),
+        ("currentMonth", day.month == selectedMonth)]
+    in
+        div [classList classes] [text (toString day.date)]
 
 nextMonth : Int -> Int -> (Int,Int)
 nextMonth currentMonth currentYear  =
@@ -144,7 +152,6 @@ prevMonth currentMonth currentYear =
         (11, currentYear - 1)
     else
         (currentMonth - 1, currentYear)
-
 
 month_row : Int -> String -> Int -> Html.Html Msg
 
